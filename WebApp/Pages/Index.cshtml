@@ -1,0 +1,59 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "BattleShips";
+}
+
+<div class="container text-center">
+    <h1 class="display-4">BattleShips</h1>
+</div>
+<div class="container text-center">
+    <form method="get" action="Gameplay" class="text-center">
+        <div class="text-center">
+            <button type="submit" class = "btn btn-primary">New Game</button>
+        </div>
+    </form>
+</div>
+
+<br>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Player1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Player2)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Game) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Player2)
+        </td>
+        <td>
+            <button type="button" class="btn btn-link" onclick="window.location.href='/Gameplay/Play?id=@item.GameId'">Load</button>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

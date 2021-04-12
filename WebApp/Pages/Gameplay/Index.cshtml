@@ -1,0 +1,130 @@
+@page
+@model WebApp.Pages.Gameplay.Index
+@if (Model.Message != null)
+{
+  <div class="container">
+    <div class="alert alert-danger text-center" role="alert">
+      @Model.Message
+    </div>
+  </div>
+}
+<form method="post">
+  <div class="form-group">
+    <label for="name">Game Name</label>
+    <input asp-for="GameName" class="form-control" id="name" placeholder="Game Name">
+    <span asp-validation-for="GameName"></span>
+  </div>
+  <div class="form-row">
+      <div class="col">
+        <label for="player_1_name">Player 1 Name</label>
+        <input asp-for="Player1Name" class="form-control" id="player_1_name" placeholder="Player 1 Name">
+      </div>
+      <div class="col">
+        <label for="player_2_name">Player 2 Name</label>
+        <input asp-for="Player2Name" class="form-control" id="player_2_name" placeholder="Player 2 Name">
+      </div>
+    </div>
+  <div class="form-row">
+    <div class="col">
+      <label for="width">Board Width</label>
+      <input asp-for="Width" class="form-control" id="width" placeholder="Board width">
+      <span asp-validation-for="Width"></span>
+    </div>
+    <div class="col">
+      <label for="height">Board Height</label>
+      <input asp-for="Height" class="form-control" id="height" placeholder="Board height">
+      <span asp-validation-for="Height"></span>
+    </div>
+  </div>
+  <br>
+  <div class="form-row">
+    <div class="col">
+      <input type="text" class="form-control" id="shipName" placeholder="Ship Name">
+    </div>
+    <div class="col">
+      <input type="number" class="form-control" id="shipSize" placeholder="Ship Size">
+    </div>
+    <div class="form-check form-check-inline">
+      <input type="radio" class="form-check-input" id="player1" name="choose_player" value="Player 1">
+      <label class="form-check-label" for="player1">Player 1</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input type="radio" class="form-check-input" id="player2" name="choose_player" value="Player 2">
+      <label class="form-check-label" for="player2">Player 2</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <button type="button" onclick="addNewShip()">Add Ship</button>
+    </div>
+    <br>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="shipListP1">First Player Ships</label>
+    <ul id="shipListP1">
+    </ul>
+  </div>
+  <div class="form-group">
+    <label for="shipListP2">Second Player Ships</label>
+    <ul id="shipListP2">
+    </ul>
+  </div>
+  <div class="form-row">
+    <div class="col">
+      <label for="starting_player">Starting Player</label>
+      <select id="starting_player" class="form-control" name="StartingPlayer">
+        <option selected>Player 1</option>
+        <option>Player 2</option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="consec_moves">Consecutive moves on hit</label>
+      <select id="consec_moves" class="form-control" name="ConsecutiveMovesOnHit">
+        <option selected>Yes</option>
+        <option>No</option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="boats_touch">Boats can touch</label>
+      <select id="boats_touch" class="form-control" name="BoatsCanTouch">
+        <option selected>Yes</option>
+        <option>Corners</option>
+        <option>No</option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <div class="form-check">
+    <input asp-for="RandomShips" class="form-check-input" id="RandomShips">
+    <label class="form-check-label" for="RandomShips">Randomly Place Ships</label>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary">Create Game</button>
+</form>
+
+<script>
+  function addNewShip() {
+    let ships;
+    if (document.getElementById("player1").checked) {
+        ships = document.getElementById("shipListP1"); 
+    } else if (document.getElementById("player2").checked) {
+        ships = document.getElementById("shipListP2");
+    }
+    let li = document.createElement("li");
+    let text = document.getElementById("shipName").value + " (" + document.getElementById("shipSize").value + ")";
+    li.appendChild(document.createTextNode(text + "  "));
+    let btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn btn-link";
+    btn.innerHTML = "Delete"
+    btn.onclick = function () {
+      li.remove();
+    }
+    li.appendChild(btn);
+    let input = document.createElement("input");
+    input.type = "hidden";
+    input.name = document.getElementById("player1").checked ? "Player1Ships" : "Player2Ships";
+    input.value = text;
+    li.appendChild(input);
+    ships.appendChild(li);
+  }
+</script>

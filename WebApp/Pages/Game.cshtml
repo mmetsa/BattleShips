@@ -1,0 +1,27 @@
+@page
+@model WebApp.Pages.Test
+
+<div asp-validation-summary="All"></div>
+
+<table class="table table-striped">
+    @for (var y = 0; y < Model.GameBoard.GetLength(0); y++)
+    {
+        <tr>
+            @for (var x = 0; x < Model.GameBoard.GetLength(1); x++)
+            {
+                <td><a asp-route-x="@x" asp-route-y="@y">@Model.GameBoard[x, y]</a></td>
+            }
+        </tr>
+    }
+</table>
+
+<form method="post">
+    
+    <label asp-for="Name"></label>
+    <input asp-for="Name"/>
+    <span asp-validation-for="Name"></span>
+    
+    <input type="submit" value="Submit"/>
+</form>
+
+<div>@Model.Name</div>

@@ -1,0 +1,42 @@
+@page
+@model WebApp.Pages_GameStates.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GameState[0].Game)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameState[0].State)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.GameState) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Game.EBoatsCanTouch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.GameStateId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.GameStateId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.GameStateId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

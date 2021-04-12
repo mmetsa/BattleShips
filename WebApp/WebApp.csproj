@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+      <ProjectReference Include="..\GameBrain\GameBrain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\GameStates\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\GameStates\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\GameStates\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\GameStates\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\GameStates\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Games\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Games\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Games\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Games\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Games\Index.cshtml" />
+    </ItemGroup>
+
+</Project>

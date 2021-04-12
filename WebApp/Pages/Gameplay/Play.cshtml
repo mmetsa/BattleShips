@@ -1,0 +1,155 @@
+@page
+@using GameBrain
+@model WebApp.Pages.Gameplay.Play
+
+@functions
+{
+    string GetCellContent(CellState cellState, bool showShips)
+    {
+        if (cellState.ShipId == null)
+        {
+            return cellState.Bomb ? "*" : "&nbsp";
+        }
+        return cellState.Bomb ? "X" : showShips ? "S" : "&nbsp";
+        
+    }
+}
+@if (Model.GameOver)
+{
+    @if(Model.GameBrain!.NextMoveByP1)
+    {
+        <script>
+            alert("The Game is over! @Model.GameBrain.GameOptions.Player1 won!");
+            window.location.href="../Index";
+        </script>
+    }
+    else
+    {
+        <script>
+            alert("The Game is over! @Model.GameBrain.GameOptions.Player2 won!");
+            window.location.href="../Index";
+        </script>
+    }
+}
+@if (Model.GameBrain!.NextMoveByP1 && Model.GameBrain.GameOptions.Player1Ships.Count != 0
+     || !Model.GameBrain.NextMoveByP1 && Model.GameBrain.GameOptions.Player2Ships.Count != 0)
+{
+    <div class="container text-center">
+        @if (Model.GameBrain.NextMoveByP1)
+        {
+            <h1>@Model.GameBrain.GameOptions.Player1: Place your ships</h1>
+        }
+        else
+        {
+            <h1>@Model.GameBrain.GameOptions.Player2, Place your ships</h1>
+        }
+    </div>
+    <div class="container text-center">
+        <label for="changeRotation" id="changeRotation"></label>
+        <button type="button" onclick="changeRotation()">Change</button>
+    </div>    
+}
+else
+{
+    <div class="container text-center">
+        @if (Model.GameBrain.NextMoveByP1)
+        {
+            <h1>@Model.GameBrain.GameOptions.Player1: Shoot!</h1>
+        }
+        else
+        {
+            <h1>@Model.GameBrain.GameOptions.Player2, Shoot!</h1>
+        }
+    </div>
+}
+@if (Model.HitScreen)
+{
+    @if(Model.GameBrain.GameOptions.ConsecutiveMovesOnHit)
+    {
+        <script>alert("You hit a ship! It's your turn again!")</script>
+    }
+    else
+    {
+        <script>alert("You hit a ship! It's not your turn anymore!")</script>
+    }
+}
+else if(Model.GameBrain!.NextMoveByP1 && Model.GameBrain.GameOptions.Player1Ships.Count == 0
+        || !Model.GameBrain.NextMoveByP1 && Model.GameBrain.GameOptions.Player2Ships.Count == 0)
+{
+    @if (Model.GameBrain.NextMoveByP1)
+    {
+        <script>alert("@Model.GameBrain.GameOptions.Player1, it's your turn to shoot!")</script>
+    }
+    else
+    {
+        <script>alert("@Model.GameBrain.GameOptions.Player2, it's your turn to shoot!")</script>
+    }
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table table-bordered table-sm">
+                <caption>Your board</caption>
+                @for (var i = 1; i <= Model.Game?.Height; i++)
+                {
+                    <tr>
+                        @for (var j = 1; j <= Model.Game?.Height; j++)
+                        {
+                            <td id="@i,@j" onclick="window.location.href = '?x=@i&y=@j&id=@Model.Game!.GameId&board=1&rotation=' + rotation" style="cursor: pointer; text-align: center">
+                                @if (Model.GameBrain!.NextMoveByP1)
+                                {
+                                    @Html.Raw(GetCellContent(Model.GameBrain!.GetBoard(!Model.GameBrain.NextMoveByP1)[i - 1, j - 1], true))
+                                }
+                                else if (!Model.GameBrain.NextMoveByP1)
+                                {
+                                    @Html.Raw(GetCellContent(Model.GameBrain!.GetBoard(!Model.GameBrain.NextMoveByP1)[i - 1, j - 1], true))
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="col">
+            <table class="table table-bordered table-sm">
+                <caption>Opponent's board</caption>
+                @for (var i = 1; i <= Model.Game?.Height; i++)
+                {
+                    <tr>
+                        @for (var j = 1; j <= Model.Game?.Height; j++)
+                        {
+                            <td onclick="window.location.href = '?x=@i&y=@j&id=@Model.Game!.GameId&board=2'" style="cursor: pointer; text-align: center">
+                                @if (Model.GameBrain!.NextMoveByP1)
+                                {
+                                    @Html.Raw(GetCellContent(Model.GameBrain!.GetBoard(Model.GameBrain.NextMoveByP1)[i - 1, j - 1], false))
+                                }
+                                else if (!Model.GameBrain.NextMoveByP1)
+                                {
+                                    @Html.Raw(GetCellContent(Model.GameBrain!.GetBoard(Model.GameBrain.NextMoveByP1)[i - 1, j - 1], false))
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container text-center">
+    <button type="button" onclick="alert('Game Saved successfully!');window.location.href='../Index'">Save Game</button>
+</div>
+<script type="text/javascript">
+    let rotation = @Json.Serialize(Model.Rotation);
+    document.getElementById("changeRotation").innerHTML = "Currently placing ships: " + (!rotation ? "vertically" : "horizontally");
+    function changeRotation() {
+        rotation = !rotation;
+        @Model.Rotation = rotation !== true;
+        document.getElementById("changeRotation").innerHTML = "Currently placing ships: " + (!rotation ? "vertically" : "horizontally");
+    }
+    
+    function getRotation() {
+        document.getElementById("changeRotation").innerHTML = "Currently placing ships: " + (!rotation ? "vertically" : "horizontally");
+    }
+</script>

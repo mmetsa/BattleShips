@@ -1,0 +1,89 @@
+@page
+@model WebApp.Pages_Games.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Game!.GameCode" class="control-label"></label>
+                <input asp-for="Game!.GameCode" class="form-control" />
+                <span asp-validation-for="Game!.GameCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game!.CreatedAt" class="control-label"></label>
+                <input asp-for="Game!.CreatedAt" class="form-control" />
+                <span asp-validation-for="Game!.CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game!.Name" class="control-label"></label>
+                <input asp-for="Game!.Name" class="form-control" />
+                <span asp-validation-for="Game!.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game!.Width" class="control-label"></label>
+                <input asp-for="Game!.Width" class="form-control" />
+                <span asp-validation-for="Game!.Width" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game!.Height" class="control-label"></label>
+                <input asp-for="Game!.Height" class="form-control" />
+                <span asp-validation-for="Game!.Height" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game!.Player1" class="control-label"></label>
+                <input asp-for="Game!.Player1" class="form-control" />
+                <span asp-validation-for="Game!.Player1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game!.Player2" class="control-label"></label>
+                <input asp-for="Game!.Player2" class="form-control" />
+                <span asp-validation-for="Game!.Player2" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Game!.Player1Starts" /> @Html.DisplayNameFor(model => model.Game!.Player1Starts)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game!.Player1Ships" class="control-label"></label>
+                <input asp-for="Game!.Player1Ships" class="form-control" />
+                <span asp-validation-for="Game!.Player1Ships" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game!.Player2Ships" class="control-label"></label>
+                <input asp-for="Game!.Player2Ships" class="form-control" />
+                <span asp-validation-for="Game!.Player2Ships" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Game!.ConsecutiveMovesOnHit" /> @Html.DisplayNameFor(model => model.Game!.ConsecutiveMovesOnHit)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game!.EBoatsCanTouch" class="control-label"></label>
+                <input asp-for="Game!.EBoatsCanTouch" class="form-control" />
+                <span asp-validation-for="Game!.EBoatsCanTouch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
