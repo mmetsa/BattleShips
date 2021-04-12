@@ -15,6 +15,8 @@ To play this game, a database connection is required.
 
 The database Model can be created according to the Models in the Domain project.
 
+This project uses Entity Framework Core as the ORM system.
+
 * The WebApp database connection is created in appsettings.json
 * The Console App Database connection is created in Domain project BattleShipsDb class.
 
